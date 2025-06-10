@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ForumComponent } from './features/forum/forum.component';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'forum',
     component: ForumComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

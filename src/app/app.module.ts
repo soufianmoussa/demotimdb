@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ForumComponent } from './features/forum/forum.component';
+import { LoginComponent } from './auth/login/login.component';
 
 // ✅ ADD THESE
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,7 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
-    ForumComponent
+    ForumComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

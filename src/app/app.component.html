@@ -15,6 +15,12 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/forum" routerLinkActive="active">Forum</a>
         </li>
+        <li class="nav-item" *ngIf="!auth.isLoggedIn()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isLoggedIn()">
+          <a class="nav-link" (click)="logout()">Logout ({{ auth.getCurrentUser() }})</a>
+        </li>
       </ul>
       <form class="d-flex" (ngSubmit)="onSearch(searchInput.value)">
         <input #searchInput class="form-control me-2" type="search" placeholder="Search movies..." aria-label="Search">

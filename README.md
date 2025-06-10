@@ -10,6 +10,14 @@ To start a local development server, run:
 ng serve
 ```
 
+### Backend server
+
+Run the Express API with SQLite:
+
+```bash
+node server/server.js
+```
+
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
