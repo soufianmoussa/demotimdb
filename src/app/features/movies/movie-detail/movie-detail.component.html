@@ -1,0 +1,85 @@
+<div class="container py-4" *ngIf="!loading && !error">
+  <div class="row g-4">
+    <!-- Left: Poster -->
+    <div class="col-md-4">
+      <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+           [alt]="movie.title"
+           class="img-fluid rounded shadow border"
+           style="border-color: var(--accent-color);">
+    </div>
+
+    <!-- Right: Details -->
+    <div class="col-md-8">
+      <h2 class="text-warning">{{ movie.title }}</h2>
+      <p class="text-muted">Released: {{ movie.release_date | date }}</p>
+
+      <div class="mb-3 d-flex align-items-center">
+        <span class="rating-badge">
+          <i class="bi bi-star-fill"></i>
+          {{ movie.vote_average | number:'1.1-1' }}/10
+        </span>
+        <small class="text-muted ms-2">IMDb user score</small>
+      </div>
+
+      <h5 class="text-info mt-4">Overview</h5>
+      <p class="mb-4">{{ movie.overview }}</p>
+
+      <!-- Trailer -->
+      <div *ngIf="trailerUrl" class="mb-4">
+        <h5 class="text-info">Trailer</h5>
+        <div class="ratio ratio-16x9">
+          <iframe [src]="trailerUrl" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <!-- Review Form -->
+      <div class="review-form p-3 mb-4 border border-secondary">
+        <h6 class="mb-3">Write a Review</h6>
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
+          <div class="mb-3 star-rating">
+            <i class="bi bi-star-fill"
+               *ngFor="let star of [1,2,3,4,5,6,7,8,9,10]"
+               [class.filled]="commentForm.value.rating >= star"
+               (click)="setRating(star)">
+            </i>
+          </div>
+          <textarea class="form-control mb-3"
+                    formControlName="content"
+                    rows="3"
+                    placeholder="Share your thoughts..."></textarea>
+          <button class="btn btn-outline-warning" type="submit" [disabled]="!commentForm.valid">
+            Submit Review
+          </button>
+        </form>
+      </div>
+
+      <!-- Reviews -->
+      <div>
+        <h6 class="text-info mb-3">User Reviews</h6>
+        <div *ngIf="comments.length === 0" class="text-muted">No reviews yet.</div>
+        <div *ngFor="let comment of comments" class="review-box mb-3">
+          <div class="d-flex justify-content-between">
+            <strong>{{ comment.username }}</strong>
+            <span class="rating-badge">
+              <i class="bi bi-star-fill"></i> {{ comment.rating }}/10
+            </span>
+          </div>
+          <p class="fst-italic">“{{ comment.content }}”</p>
+          <small class="text-muted">{{ comment.date | date:'mediumDate' }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading -->
+<div class="container py-5 text-center" *ngIf="loading">
+  <div class="spinner-border text-warning" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<!-- Error -->
+<div class="container py-5" *ngIf="error">
+  <div class="alert alert-danger text-center">{{ error }}</div>
+</div>

@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-12">
+      <h1 class="section-heading">Movie Discussion Forum</h1>
+      <p class="lead">Join the conversation about your favorite movies and TV shows</p>
+    </div>
+  </div>
+
+  <!-- Create New Post -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Create New Post</h5>
+          <form [formGroup]="postForm" (ngSubmit)="onSubmitPost()">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" 
+                     class="form-control" 
+                     id="title" 
+                     formControlName="title"
+                     placeholder="Enter post title">
+              <div class="form-text text-danger" *ngIf="postForm.get('title')?.errors?.['minlength']">
+                Title must be at least 5 characters long.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="content" class="form-label">Content</label>
+              <textarea class="form-control" 
+                        id="content" 
+                        rows="4" 
+                        formControlName="content"
+                        placeholder="Share your thoughts..."></textarea>
+              <div class="form-text text-danger" *ngIf="postForm.get('content')?.errors?.['minlength']">
+                Content must be at least 20 characters long.
+              </div>
+            </div>
+            <button type="submit" 
+                    class="btn btn-primary" 
+                    [disabled]="!postForm.valid">
+              Create Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forum Posts -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <h3>Recent Discussions</h3>
+      <div class="post-list">
+        <div class="card mb-3" *ngFor="let post of posts">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <span class="badge bg-primary">{{ post.replies }} replies</span>
+            </div>
+            <p class="card-text">{{ post.content }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="post-meta">
+                <small class="text-muted">
+                  Posted by {{ post.author }} | {{ post.date | date:'medium' }}
+                </small>
+              </div>
+              <div class="post-actions">
+                <button class="btn btn-sm btn-outline-primary me-2" (click)="likePost(post)">
+                  <i class="bi bi-heart-fill"></i> {{ post.likes }}
+                </button>
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="bi bi-chat-fill"></i> Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="row" *ngIf="loading">
+    <div class="col-12 text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="row" *ngIf="error">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+</div> 

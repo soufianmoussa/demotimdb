@@ -1,0 +1,19 @@
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  padding-right: 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.search-field {
+  width: 250px;
+  margin-right: 16px;
+}

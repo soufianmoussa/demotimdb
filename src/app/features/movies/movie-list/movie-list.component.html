@@ -1,0 +1,47 @@
+<div class="container">
+  <!-- Hero Section -->
+  <div class="hero-section text-center py-5">
+    <h1 class="display-4">Discover Movies</h1>
+    <p class="lead">Explore the latest and greatest in cinema</p>
+  </div>
+
+  <!-- Movies Grid -->
+  <div class="row g-4" *ngIf="!loading && !error">
+    <div class="col-md-3" *ngFor="let movie of movies">
+      <div class="card h-100" (click)="navigateToDetail(movie.id)">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+             [alt]="movie.title"
+             class="card-img-top movie-poster"
+             onerror="this.src='assets/images/movie-placeholder.jpg'">
+        <div class="card-body">
+          <h5 class="card-title text-truncate">{{ movie.title }}</h5>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="rating">
+              <i class="bi bi-star-fill"></i>
+              {{ movie.vote_average | number:'1.1-1' }}
+            </div>
+            <small class="text-muted">{{ movie.release_date | date:'yyyy' }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="row" *ngIf="loading">
+    <div class="col-12 text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div class="row" *ngIf="error">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+    </div>
+  </div>
+</div>

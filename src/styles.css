@@ -1,1 +1,60 @@
-/* You can add global styles to this file, and also import other style files */
+
+:root {
+  --background-color: #0f0f0f;
+  --card-color: #1c1c1c;
+  --text-color: #f5f5f5;
+  --muted-text: #aaaaaa;
+  --accent-color: #f5c518;
+  --rating-color: #f5c518;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-light);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.card {
+  background-color: var(--card-color);
+  color: var(--text-light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+button, .btn {
+  border-radius: var(--border-radius);
+  font-weight: 500;
+}
+
+input, textarea {
+  background-color: #222;
+  color: var(--text-light);
+  border: 1px solid #444;
+  border-radius: var(--border-radius);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
