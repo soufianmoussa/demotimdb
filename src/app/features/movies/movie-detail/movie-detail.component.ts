@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MovieService } from '../../../services/movie.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { AuthService } from '../../../services/auth.service';
 
 interface Comment {
   id: number;
@@ -30,7 +31,8 @@ constructor(
   private route: ActivatedRoute,
   private movieService: MovieService,
   private fb: FormBuilder,
-  private sanitizer: DomSanitizer 
+  private sanitizer: DomSanitizer,
+  private auth: AuthService
 ) {
     this.commentForm = this.fb.group({
       content: ['', [Validators.required, Validators.minLength(10)]],
@@ -47,59 +49,62 @@ constructor(
     }
 
     this.movieService.getMovieDetails(movieId).subscribe({
-  next: (response) => {
-    this.movie = response;
-    this.loading = false;
-
-    // Get trailer from TMDB response
-    const trailer = response.videos?.results?.find((v: any) =>
-      v.type === 'Trailer' && v.site === 'YouTube'
-    );
-    if (trailer) {
-      this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        `https://www.youtube.com/embed/${trailer.key}`
-      );
-    }
-  },
-  error: (err) => {
-    console.error('Error fetching movie details:', err);
-    this.error = 'Failed to load movie details.';
-    this.loading = false;
-  }
-});
-
-    // Load reviews if available
-    this.movieService.getMovieReviews(movieId).subscribe({
       next: (response) => {
-        this.comments = response.results.map((review: any) => ({
-          id: review.id,
-          username: review.author,
-          content: review.content,
-          rating: review.author_details?.rating || 5,
-          date: new Date(review.created_at)
-        }));
+        this.movie = response;
+        this.loading = false;
+
+        // Get trailer from TMDB response
+        const trailer = response.videos?.results?.find((v: any) =>
+          v.type === 'Trailer' && v.site === 'YouTube'
+        );
+        if (trailer) {
+          this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://www.youtube.com/embed/${trailer.key}`
+          );
+        }
+        this.loadComments(movieId);
       },
       error: (err) => {
-        console.error('Error fetching reviews:', err);
-        // Don't set error state for reviews, just keep the default empty array
+        console.error('Error fetching movie details:', err);
+        this.error = 'Failed to load movie details.';
+        this.loading = false;
       }
     });
   }
 
+  loadComments(movieId: string) {
+    const data = localStorage.getItem('movie_reviews_' + movieId);
+    if (data) {
+      this.comments = JSON.parse(data).map((c: any) => ({ ...c, date: new Date(c.date) }));
+    } else {
+      this.comments = [];
+    }
+  }
+
+  saveComments(movieId: string) {
+    localStorage.setItem('movie_reviews_' + movieId, JSON.stringify(this.comments));
+  }
+
   onSubmitComment() {
     if (this.commentForm.valid) {
+      const movieId = this.route.snapshot.paramMap.get('id');
+      if (!movieId) return;
+      const currentUser = this.auth.getCurrentUser();
+      if (!currentUser) {
+        this.error = 'Please log in to leave a review.';
+        return;
+      }
       const newComment: Comment = {
-        id: this.comments.length + 1,
-        username: 'CurrentUser', // TODO: Get from auth service
+        id: Date.now(),
+        username: currentUser,
         content: this.commentForm.value.content,
         rating: this.commentForm.value.rating,
         date: new Date()
       };
-
       this.comments.unshift(newComment);
-      this.commentForm.reset({
-        rating: 5
-      });
+      this.saveComments(movieId);
+      this.commentForm.reset({ rating: 5 });
+      this.error = null;
     }
   }
 

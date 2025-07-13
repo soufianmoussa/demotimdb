@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-movie-list',
@@ -33,7 +34,8 @@ export class MovieListComponent implements OnInit {
   constructor(
     private movieService: MovieService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -125,5 +127,17 @@ export class MovieListComponent implements OnInit {
 
   navigateToDetail(movieId: number): void {
     this.router.navigate(['/movies', movieId]);
+  }
+
+  isInWatchlist(movie: any): boolean {
+    return this.auth.getWatchlist().some((m: any) => m.id === movie.id);
+  }
+
+  addToWatchlist(movie: any): void {
+    this.auth.addToWatchlist(movie);
+  }
+
+  removeFromWatchlist(movie: any): void {
+    this.auth.removeFromWatchlist(movie.id);
   }
 }

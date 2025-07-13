@@ -270,3 +270,41 @@
   color: var(--imdb-gray) !important;
   font-size: 1rem;
 }
+
+.carousel-actions .btn-outline-light.btn-lg {
+  border-color: var(--imdb-yellow) !important;
+  color: var(--imdb-yellow) !important;
+  background: transparent !important;
+  font-weight: 600;
+}
+.carousel-actions .btn-outline-light.btn-lg:hover,
+.carousel-actions .btn-outline-light.btn-lg:focus {
+  background-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+  border-color: var(--imdb-yellow) !important;
+}
+.carousel-actions .btn-warning.btn-lg {
+  background-color: var(--imdb-yellow) !important;
+  border-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+  font-weight: 600;
+}
+.carousel-actions .btn-warning.btn-lg:hover,
+.carousel-actions .btn-warning.btn-lg:focus {
+  background-color: #e6b800 !important;
+  border-color: #e6b800 !important;
+  color: var(--imdb-dark) !important;
+}
+
+.carousel-actions .btn-primary.btn-lg {
+  background-color: var(--imdb-yellow) !important;
+  border-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+  font-weight: 600;
+}
+.carousel-actions .btn-primary.btn-lg:hover,
+.carousel-actions .btn-primary.btn-lg:focus {
+  background-color: #e6b800 !important;
+  border-color: #e6b800 !important;
+  color: var(--imdb-dark) !important;
+}

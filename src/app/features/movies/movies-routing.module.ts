@@ -8,7 +8,8 @@ const routes: Routes = [
     path: '', 
     children: [
       { path: '', component: MovieListComponent },
-      { path: ':id', component: MovieDetailComponent }
+      { path: ':id', component: MovieDetailComponent },
+      { path: 'profile', loadComponent: () => import('../profile/profile.component').then(m => m.ProfileComponent) }
     ]
   }
 ];

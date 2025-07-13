@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ForumComponent } from './features/forum/forum.component';
 import { LoginComponent } from './auth/login/login.component';
 import { FooterComponent } from './footer/footer.component';
+import { ProfileComponent } from './features/profile/profile.component';
 
 // ✅ ADD THESE
 import { MatToolbarModule } from '@angular/material/toolbar';

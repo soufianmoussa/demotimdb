@@ -12,7 +12,11 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Create New Post</h5>
-          <form [formGroup]="postForm" (ngSubmit)="onSubmitPost()">
+          <div *ngIf="!auth.isLoggedIn()" class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            Please <a routerLink="/login" class="alert-link">log in</a> to create a post.
+          </div>
+          <form [formGroup]="postForm" (ngSubmit)="onSubmitPost()" [class.disabled]="!auth.isLoggedIn()">
             <div class="mb-3">
               <label for="title" class="form-label">Title</label>
               <input type="text" 
@@ -37,7 +41,7 @@
             </div>
             <button type="submit" 
                     class="btn btn-primary" 
-                    [disabled]="!postForm.valid">
+                    [disabled]="!postForm.valid || !auth.isLoggedIn()">
               Create Post
             </button>
           </form>
@@ -68,9 +72,35 @@
                 <button class="btn btn-sm btn-outline-primary me-2" (click)="likePost(post)">
                   <i class="bi bi-heart-fill"></i> {{ post.likes }}
                 </button>
-                <button class="btn btn-sm btn-outline-secondary">
+                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#replySection' + post.id">
                   <i class="bi bi-chat-fill"></i> Reply
                 </button>
+              </div>
+            </div>
+            <!-- Replies Section -->
+            <div [id]="'replySection' + post.id" class="collapse mt-3">
+              <div *ngIf="post.replyList && post.replyList.length > 0">
+                <div class="mb-2" *ngFor="let reply of post.replyList">
+                  <div class="border rounded p-2 mb-1 bg-dark text-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <strong>{{ reply.author }}</strong>
+                      <small class="text-muted">{{ reply.date | date:'short' }}</small>
+                    </div>
+                    <div>{{ reply.content }}</div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="auth.isLoggedIn()" class="mt-2">
+                <form [formGroup]="replyForms[post.id]" (ngSubmit)="onSubmitReply(post)">
+                  <div class="input-group">
+                    <input type="text" class="form-control" formControlName="content" placeholder="Write a reply...">
+                    <button class="btn btn-primary" type="submit" [disabled]="!replyForms[post.id].valid">Send</button>
+                  </div>
+                </form>
+              </div>
+              <div *ngIf="!auth.isLoggedIn()" class="alert alert-warning mt-2">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                Please <a routerLink="/login" class="alert-link">log in</a> to reply.
               </div>
             </div>
           </div>
