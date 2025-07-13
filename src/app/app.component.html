@@ -1,8 +1,8 @@
 <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
-      <i class="bi bi-film"></i> {{ title }}
+      <i class="bi bi-film"></i> MovieDB
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
       <span class="navbar-toggler-icon"></span>
@@ -10,27 +10,73 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/movies" routerLinkActive="active">Movies</a>
+          <a class="nav-link" routerLink="/movies" routerLinkActive="active">
+            <i class="bi bi-collection-play me-1"></i>Movies
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/forum" routerLinkActive="active">Forum</a>
-        </li>
-        <li class="nav-item" *ngIf="!auth.isLoggedIn()">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
-        </li>
-        <li class="nav-item" *ngIf="auth.isLoggedIn()">
-          <a class="nav-link" (click)="logout()">Logout ({{ auth.getCurrentUser() }})</a>
+          <a class="nav-link" routerLink="/forum" routerLinkActive="active">
+            <i class="bi bi-chat-dots me-1"></i>Forum
+          </a>
         </li>
       </ul>
-      <form class="d-flex" (ngSubmit)="onSearch(searchInput.value)">
-        <input #searchInput class="form-control me-2" type="search" placeholder="Search movies..." aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Search</button>
-      </form>
+      
+      <!-- Search Bar -->
+<form class="d-flex me-3 position-relative" (submit)="onSearch(searchInput.value); $event.preventDefault()">
+  <div class="input-group">
+    <input #searchInput
+           class="form-control"
+           type="search"
+           placeholder="Search movies..."
+           aria-label="Search"
+           (input)="onInput(searchInput.value)"
+           (focus)="showSuggestions = true"
+           (blur)="hideSuggestionsDelayed()"
+           autocomplete="off">
+    <button class="btn btn-outline-light" type="submit">
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+
+  <!-- Suggestion Dropdown -->
+  <ul *ngIf="showSuggestions && suggestions.length > 0"
+      class="dropdown-menu show w-100 shadow"
+      style="position: absolute; top: 100%; left: 0; z-index: 999;">
+    <li *ngFor="let movie of suggestions" (mousedown)="goToMovie(movie.id)" class="dropdown-item text-light bg-dark">
+      <i class="bi bi-film me-2"></i>{{ movie.title }}
+    </li>
+  </ul>
+</form>
+
+
+      
+      <!-- Auth Section -->
+      <ul class="navbar-nav">
+        <li class="nav-item" *ngIf="!auth.isLoggedIn()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">
+            <i class="bi bi-person-circle me-1"></i>Login
+          </a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="auth.isLoggedIn()">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i>{{ auth.getCurrentUser() }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-heart me-2"></i>Watchlist</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
 
 <!-- Main Content -->
-<div class="container-fluid mt-4">
+<main class="main-content">
   <router-outlet></router-outlet>
-</div>
+</main>
+
+<!-- Footer -->
+<app-footer></app-footer>

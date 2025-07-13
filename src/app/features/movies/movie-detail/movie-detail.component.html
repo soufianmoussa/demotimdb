@@ -1,85 +1,202 @@
-<div class="container py-4" *ngIf="!loading && !error">
-  <div class="row g-4">
-    <!-- Left: Poster -->
-    <div class="col-md-4">
-      <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-           [alt]="movie.title"
-           class="img-fluid rounded shadow border"
-           style="border-color: var(--accent-color);">
-    </div>
-
-    <!-- Right: Details -->
-    <div class="col-md-8">
-      <h2 class="text-warning">{{ movie.title }}</h2>
-      <p class="text-muted">Released: {{ movie.release_date | date }}</p>
-
-      <div class="mb-3 d-flex align-items-center">
-        <span class="rating-badge">
-          <i class="bi bi-star-fill"></i>
-          {{ movie.vote_average | number:'1.1-1' }}/10
-        </span>
-        <small class="text-muted ms-2">IMDb user score</small>
+<div class="container-fluid px-0" *ngIf="!loading && !error">
+  <!-- Hero Section with Backdrop -->
+  <div class="movie-hero" [style.background-image]="'url(https://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'">
+    <div class="hero-overlay">
+      <div class="container">
+        <div class="row align-items-end">
+          <div class="col-lg-3 col-md-4">
+            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                 [alt]="movie.title"
+                 class="hero-poster">
+          </div>
+          <div class="col-lg-9 col-md-8">
+            <div class="hero-content">
+              <h1 class="hero-title">{{ movie.title }}</h1>
+              <div class="hero-meta">
+                <span class="year">{{ movie.release_date | date:'yyyy' }}</span>
+                <span class="separator">•</span>
+                <span class="runtime">{{ movie.runtime }} min</span>
+                <span class="separator">•</span>
+                <span class="rating">
+                  <i class="bi bi-star-fill"></i>
+                  {{ movie.vote_average | number:'1.1-1' }}
+                </span>
+              </div>
+              <div class="hero-genres">
+                <span class="badge bg-secondary me-2" *ngFor="let genre of movie.genres">{{ genre.name }}</span>
+              </div>
+              <div class="hero-actions mt-3">
+                <button class="btn btn-primary btn-lg me-3">
+                  <i class="bi bi-play-circle me-2"></i>Watch Trailer
+                </button>
+                <button class="btn btn-outline-light btn-lg">
+                  <i class="bi bi-heart me-2"></i>Add to Watchlist
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
 
-      <h5 class="text-info mt-4">Overview</h5>
-      <p class="mb-4">{{ movie.overview }}</p>
+  <!-- Content Section -->
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Left Column: Overview -->
+      <div class="col-lg-8">
+        <!-- Overview -->
+        <div class="content-section">
+          <h3 class="section-title">
+            <i class="bi bi-info-circle me-2"></i>Overview
+          </h3>
+          <p class="overview-text">{{ movie.overview }}</p>
+        </div>
 
-      <!-- Trailer -->
-      <div *ngIf="trailerUrl" class="mb-4">
-        <h5 class="text-info">Trailer</h5>
-        <div class="ratio ratio-16x9">
-          <iframe [src]="trailerUrl" frameborder="0" allowfullscreen></iframe>
+        <!-- Cast & Crew -->
+        <div class="content-section">
+          <h3 class="section-title">
+            <i class="bi bi-people me-2"></i>Cast & Crew
+          </h3>
+          <div class="cast-grid">
+            <div class="cast-item" *ngFor="let cast of movie.credits?.cast?.slice(0, 6)">
+              <img [src]="'https://image.tmdb.org/t/p/w200' + cast.profile_path" 
+                   [alt]="cast.name"
+                   class="cast-photo">
+              <div class="cast-info">
+                <h6>{{ cast.name }}</h6>
+                <small>{{ cast.character }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="content-section">
+          <h3 class="section-title">
+            <i class="bi bi-chat-quote me-2"></i>User Reviews
+          </h3>
+          
+          <!-- Review Form -->
+          <div class="review-form mb-4">
+            <h5>Write a Review</h5>
+            <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
+              <div class="rating-input mb-3">
+                <label class="form-label">Your Rating</label>
+                <div class="star-rating">
+                  <i class="bi bi-star"
+                     *ngFor="let star of [1,2,3,4,5,6,7,8,9,10]"
+                     [class.bi-star-fill]="commentForm.value.rating >= star"
+                     [class.text-warning]="commentForm.value.rating >= star"
+                     (click)="setRating(star)">
+                  </i>
+                  <span class="rating-text ms-2">{{ commentForm.value.rating }}/10</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control"
+                          formControlName="content"
+                          rows="4"
+                          placeholder="Share your thoughts about this movie..."></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit" [disabled]="!commentForm.valid">
+                <i class="bi bi-send me-2"></i>Submit Review
+              </button>
+            </form>
+          </div>
+
+          <!-- Reviews List -->
+          <div class="reviews-list">
+            <div *ngIf="comments.length === 0" class="text-center text-muted py-4">
+              <i class="bi bi-chat-dots display-4"></i>
+              <p class="mt-3">No reviews yet. Be the first to review this movie!</p>
+            </div>
+            <div *ngFor="let comment of comments" class="review-item">
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <i class="bi bi-person-circle me-2"></i>
+                  <strong>{{ comment.username }}</strong>
+                </div>
+                <div class="review-rating">
+                  <span class="rating-badge">
+                    <i class="bi bi-star-fill"></i> {{ comment.rating }}/10
+                  </span>
+                </div>
+              </div>
+              <div class="review-content">
+                <p>"{{ comment.content }}"</p>
+              </div>
+              <div class="review-footer">
+                <small class="text-muted">{{ comment.date | date:'mediumDate' }}</small>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Review Form -->
-      <div class="review-form p-3 mb-4 border border-secondary">
-        <h6 class="mb-3">Write a Review</h6>
-        <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
-          <div class="mb-3 star-rating">
-            <i class="bi bi-star-fill"
-               *ngFor="let star of [1,2,3,4,5,6,7,8,9,10]"
-               [class.filled]="commentForm.value.rating >= star"
-               (click)="setRating(star)">
-            </i>
+      <!-- Right Column: Sidebar -->
+      <div class="col-lg-4">
+        <!-- Movie Details -->
+        <div class="sidebar-section">
+          <h4 class="sidebar-title">
+            <i class="bi bi-film me-2"></i>Details
+          </h4>
+          <div class="detail-item">
+            <span class="detail-label">Release Date</span>
+            <span class="detail-value">{{ movie.release_date | date:'longDate' }}</span>
           </div>
-          <textarea class="form-control mb-3"
-                    formControlName="content"
-                    rows="3"
-                    placeholder="Share your thoughts..."></textarea>
-          <button class="btn btn-outline-warning" type="submit" [disabled]="!commentForm.valid">
-            Submit Review
-          </button>
-        </form>
-      </div>
+          <div class="detail-item">
+            <span class="detail-label">Runtime</span>
+            <span class="detail-value">{{ movie.runtime }} minutes</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Genre</span>
+            <span class="detail-value">{{ getGenresString() }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Language</span>
+            <span class="detail-value">{{ movie.original_language?.toUpperCase() }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Budget</span>
+            <span class="detail-value">{{ movie.budget | currency:'USD':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Revenue</span>
+            <span class="detail-value">{{ movie.revenue | currency:'USD':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
 
-      <!-- Reviews -->
-      <div>
-        <h6 class="text-info mb-3">User Reviews</h6>
-        <div *ngIf="comments.length === 0" class="text-muted">No reviews yet.</div>
-        <div *ngFor="let comment of comments" class="review-box mb-3">
-          <div class="d-flex justify-content-between">
-            <strong>{{ comment.username }}</strong>
-            <span class="rating-badge">
-              <i class="bi bi-star-fill"></i> {{ comment.rating }}/10
-            </span>
+        <!-- Trailer Section -->
+        <div class="sidebar-section" *ngIf="trailerUrl">
+          <h4 class="sidebar-title">
+            <i class="bi bi-play-circle me-2"></i>Trailer
+          </h4>
+          <div class="trailer-container">
+            <iframe [src]="trailerUrl" 
+                    frameborder="0" 
+                    allowfullscreen
+                    class="trailer-iframe">
+            </iframe>
           </div>
-          <p class="fst-italic">“{{ comment.content }}”</p>
-          <small class="text-muted">{{ comment.date | date:'mediumDate' }}</small>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Loading -->
+<!-- Loading State -->
 <div class="container py-5 text-center" *ngIf="loading">
-  <div class="spinner-border text-warning" role="status">
+  <div class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
+  <p class="mt-3 text-muted">Loading movie details...</p>
 </div>
 
-<!-- Error -->
+<!-- Error State -->
 <div class="container py-5" *ngIf="error">
-  <div class="alert alert-danger text-center">{{ error }}</div>
+  <div class="alert alert-danger text-center">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    {{ error }}
+  </div>
 </div>

@@ -1,60 +1,954 @@
+/* Import Bootstrap Icons */
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
+/* IMDB Style Variables */
 :root {
-  --background-color: #0f0f0f;
-  --card-color: #1c1c1c;
-  --text-color: #f5f5f5;
-  --muted-text: #aaaaaa;
-  --accent-color: #f5c518;
-  --rating-color: #f5c518;
-  --border-radius: 12px;
-  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --imdb-yellow: #f5c518;
+  --imdb-dark: #1a1a1a;
+  --imdb-darker: #0f0f0f;
+  --imdb-light: #ffffff;
+  --imdb-gray: #666666;
+  --imdb-light-gray: #e5e5e5;
+  --imdb-border: #333333;
+  --imdb-hover: #2a2a2a;
+  --imdb-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --imdb-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
 
 body {
-  background-color: var(--background-color);
-  color: var(--text-light);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-image: 
+    linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%),
+    url('https://www.transparenttextures.com/patterns/black-linen.png');
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: var(--imdb-light);
+  line-height: 1.6;
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5 {
-  color: var(--accent-color);
-  font-weight: 600;
+
+/* COMPREHENSIVE TEXT COLOR FIXES FOR ENTIRE PROJECT */
+
+/* Override ALL Bootstrap text utilities for dark theme */
+.text-muted, .text-secondary, .form-text, small, .post-meta, .movie-meta, .hero-meta, .review-footer, .cast-info small {
+  color: #e0e0e0 !important;
 }
 
+.text-dark, .text-body, .text-black, .text-default {
+  color: var(--imdb-light) !important;
+}
+
+.text-light, .text-white {
+  color: var(--imdb-light) !important;
+}
+
+.text-warning {
+  color: var(--imdb-yellow) !important;
+}
+
+.text-danger {
+  color: #ff7675 !important;
+}
+
+.text-success {
+  color: #00b894 !important;
+}
+
+.text-info {
+  color: #74b9ff !important;
+}
+
+/* Override ALL Bootstrap background utilities */
+.bg-light, .bg-white, .bg-default {
+  background-color: var(--imdb-hover) !important;
+  color: var(--imdb-light) !important;
+}
+
+.bg-secondary {
+  background-color: var(--imdb-gray) !important;
+  color: var(--imdb-light) !important;
+}
+
+.bg-dark {
+  background-color: var(--imdb-darker) !important;
+  color: var(--imdb-light) !important;
+}
+
+.bg-primary {
+  background-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+}
+
+/* ALL Card and Form text defaults */
+.card, .card-body, .card-title, .card-text, .form-label, .form-control, .form-check-label, 
+.auth-title, .auth-subtitle, .overview-text, .review-content p, .reviewer-info, 
+.sidebar-title, .detail-value, .content-section, .hero-content, .cast-info h6,
+.review-form, .review-item, .sidebar-section, .detail-item, .hero-meta,
+.section-title, .content-section p, .overview-text, .review-content p {
+  color: var(--imdb-light) !important;
+}
+
+/* ALL Headings and Titles */
+h1, h2, h3, h4, h5, h6, .section-title, .display-4, .auth-title, .card-title,
+.sidebar-title, .hero-title, .review-form h5, .cast-info h6 {
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Buttons with outline or light variant */
+.btn-outline-light, .btn-outline-primary, .btn-outline-secondary, .btn-outline-warning {
+  color: var(--imdb-yellow) !important;
+  border-color: var(--imdb-yellow) !important;
+  background: transparent !important;
+}
+
+.btn-outline-light:hover, .btn-outline-primary:hover, .btn-outline-secondary:hover, .btn-outline-warning:hover {
+  background-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+  border-color: var(--imdb-yellow) !important;
+}
+
+/* ALL Bootstrap badges */
+.badge, .bg-primary, .bg-secondary {
+  background-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+}
+
+.badge.bg-secondary {
+  background-color: var(--imdb-gray) !important;
+  color: var(--imdb-light) !important;
+}
+
+/* ALL Input placeholders */
+::placeholder, .form-control::placeholder, input::placeholder, textarea::placeholder {
+  color: var(--imdb-gray) !important;
+  opacity: 1;
+}
+
+/* ALL Alert text */
+.alert, .alert-danger, .alert-warning, .alert-info, .alert-success {
+  color: var(--imdb-light) !important;
+}
+
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+  color: #dc3545 !important;
+  border-left: 4px solid #dc3545;
+}
+
+/* ALL Star ratings */
+.star-rating i, .bi-star {
+  color: var(--imdb-gray) !important;
+}
+
+.star-rating i.bi-star-fill, .star-rating i.text-warning, .bi-star-fill {
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Rating badges */
+.rating-badge, .rating {
+  color: var(--imdb-yellow) !important;
+}
+
+.rating-badge i, .rating i {
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Links */
+a, .nav-link, .dropdown-item {
+  color: var(--imdb-light) !important;
+}
+
+a:hover, .nav-link:hover, .dropdown-item:hover {
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Form elements */
+.form-control, input, textarea, select {
+  background-color: var(--imdb-hover) !important;
+  color: var(--imdb-light) !important;
+  border: 1px solid var(--imdb-border) !important;
+}
+
+.form-control:focus, input:focus, textarea:focus, select:focus {
+  border-color: var(--imdb-yellow) !important;
+  box-shadow: 0 0 0 0.2rem rgba(245, 197, 24, 0.15) !important;
+  color: var(--imdb-light) !important;
+}
+
+/* ALL Dropdown menus */
+.dropdown-menu, .dropdown-menu-dark {
+  background-color: var(--imdb-hover) !important;
+  border: 1px solid var(--imdb-border) !important;
+  color: var(--imdb-light) !important;
+}
+
+.dropdown-item {
+  color: var(--imdb-light) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--imdb-border) !important;
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Spinners */
+.spinner-border, .spinner-border.text-primary {
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Icons */
+.bi, .bi-star, .bi-star-fill, .bi-heart, .bi-heart-fill {
+  color: inherit;
+}
+
+/* ALL Text in specific components */
+.movie-meta, .post-meta, .hero-meta, .review-footer, .cast-info small {
+  color: #e0e0e0 !important;
+}
+
+.hero-meta .year, .hero-meta .runtime, .hero-meta .separator {
+  color: var(--imdb-gray) !important;
+}
+
+.hero-meta .rating {
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Section content */
+.content-section, .overview-text, .review-content p, .reviewer-info strong {
+  color: var(--imdb-light) !important;
+}
+
+.reviewer-info strong {
+  color: var(--imdb-yellow) !important;
+}
+
+/* ALL Detail items */
+.detail-label {
+  color: var(--imdb-gray) !important;
+}
+
+.detail-value {
+  color: var(--imdb-light) !important;
+}
+
+/* ALL Loading and error text */
+.text-muted, .loading-text, .error-text {
+  color: #e0e0e0 !important;
+}
+
+/* End comprehensive text fixes */
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.display-4 {
+  font-weight: 700;
+  color: var(--imdb-yellow);
+}
+
+.lead {
+  color: var(--imdb-gray);
+  font-size: 1.1rem;
+}
+
+/* Navigation Styles */
+.navbar {
+  background-color: var(--imdb-darker) !important;
+  border-bottom: 1px solid var(--imdb-border);
+  box-shadow: var(--imdb-shadow);
+}
+
+.navbar-brand {
+  color: var(--imdb-yellow) !important;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.navbar-brand i {
+  margin-right: 0.5rem;
+}
+
+.navbar-nav .nav-link {
+  color: var(--imdb-light) !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--imdb-yellow) !important;
+}
+
+.navbar-toggler {
+  border-color: var(--imdb-border);
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+/* Dropdown Styles */
+.dropdown-menu-dark {
+  background-color: var(--imdb-hover);
+  border: 1px solid var(--imdb-border);
+  box-shadow: var(--imdb-shadow-hover);
+}
+
+.dropdown-item {
+  color: var(--imdb-light);
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--imdb-border);
+  color: var(--imdb-yellow);
+}
+
+/* Form Controls */
+.form-control {
+  background-color: var(--imdb-hover);
+  border: 1px solid var(--imdb-border);
+  color: var(--imdb-light);
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  background-color: var(--imdb-hover);
+  border-color: var(--imdb-yellow);
+  color: var(--imdb-light);
+  box-shadow: 0 0 0 0.2rem rgba(245, 197, 24, 0.25);
+}
+
+.form-control::placeholder {
+  color: var(--imdb-gray);
+}
+
+.form-control-lg {
+  padding: 0.75rem 1rem;
+  font-size: 1.1rem;
+}
+
+.form-label {
+  color: var(--imdb-light);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-check-input {
+  background-color: var(--imdb-hover);
+  border-color: var(--imdb-border);
+}
+
+.form-check-input:checked {
+  background-color: var(--imdb-yellow);
+  border-color: var(--imdb-yellow);
+}
+
+.form-check-label {
+  color: var(--imdb-light);
+}
+
+/* Buttons */
+.btn {
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-light {
+  border-color: var(--imdb-border);
+  color: var(--imdb-light);
+}
+
+.btn-outline-light:hover {
+  background-color: var(--imdb-yellow);
+  border-color: var(--imdb-yellow);
+  color: var(--imdb-dark);
+}
+
+.btn-primary {
+  background-color: var(--imdb-yellow);
+  border-color: var(--imdb-yellow);
+  color: var(--imdb-dark);
+}
+
+.btn-primary:hover {
+  background-color: #e6b800;
+  border-color: #e6b800;
+  color: var(--imdb-dark);
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* Cards */
 .card {
-  background-color: var(--card-color);
-  color: var(--text-light);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--imdb-hover);
+  border: 1px solid var(--imdb-border);
+  border-radius: 8px;
+  box-shadow: var(--imdb-shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  transform: translateY(-4px);
+  box-shadow: var(--imdb-shadow-hover);
 }
 
-button, .btn {
-  border-radius: var(--border-radius);
+.card-img-top {
+  height: 300px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-title {
+  color: var(--imdb-light);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Movie Card Specific Styles */
+.movie-card {
+  position: relative;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-rating {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.rating-badge {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: var(--imdb-yellow);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.movie-meta {
+  font-size: 0.85rem;
+  color: var(--imdb-gray);
+}
+
+/* Movie Rating */
+.rating {
+  color: var(--imdb-yellow);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.rating i {
+  font-size: 0.9rem;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--imdb-darker) 0%, var(--imdb-dark) 100%);
+  padding: 4rem 0;
+  margin-bottom: 3rem;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Main Content */
+.main-content {
+  min-height: calc(100vh - 76px);
+}
+
+/* Loading Spinner */
+.spinner-border {
+  color: var(--imdb-yellow) !important;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border-left: 4px solid #dc3545;
+}
+
+/* Movie Detail Styles */
+.movie-poster {
+  border-radius: 8px 8px 0 0;
+}
+
+/* Badge Styles */
+.badge {
+  font-weight: 500;
+  padding: 0.5em 0.75em;
+}
+
+.bg-secondary {
+  background-color: var(--imdb-gray) !important;
+}
+
+/* Movie Detail Page Styles */
+.movie-hero {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.3) 100%);
+  width: 100%;
+  padding: 3rem 0;
+}
+
+.hero-poster {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  box-shadow: var(--imdb-shadow-hover);
+}
+
+.hero-content {
+  color: var(--imdb-light);
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--imdb-light);
+}
+
+.hero-meta {
+  font-size: 1.1rem;
+  color: var(--imdb-gray);
+  margin-bottom: 1rem;
+}
+
+.hero-meta .separator {
+  margin: 0 0.5rem;
+}
+
+.hero-genres {
+  margin-bottom: 1rem;
+}
+
+.hero-actions {
+  margin-top: 2rem;
+}
+
+/* Content Sections */
+.content-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  color: var(--imdb-yellow);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--imdb-border);
+  padding-bottom: 0.5rem;
+}
+
+.overview-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--imdb-light);
+}
+
+/* Cast Grid */
+.cast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cast-item {
+  text-align: center;
+  background-color: var(--imdb-hover);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.cast-item:hover {
+  transform: translateY(-4px);
+}
+
+.cast-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.cast-info h6 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--imdb-light);
+}
+
+.cast-info small {
+  color: var(--imdb-gray);
+  font-size: 0.8rem;
+}
+
+/* Review Form */
+.review-form {
+  background-color: var(--imdb-hover);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--imdb-border);
+}
+
+.rating-input {
+  margin-bottom: 1rem;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star-rating i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.star-rating i:hover {
+  color: var(--imdb-yellow);
+}
+
+.rating-text {
+  color: var(--imdb-yellow);
+  font-weight: 600;
+}
+
+/* Reviews List */
+.reviews-list {
+  margin-top: 2rem;
+}
+
+.review-item {
+  background-color: var(--imdb-hover);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--imdb-border);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  color: var(--imdb-light);
+}
+
+.review-content p {
+  font-style: italic;
+  color: var(--imdb-light);
+  margin-bottom: 0.5rem;
+}
+
+.review-footer {
+  color: var(--imdb-gray);
+}
+
+/* Sidebar Styles */
+.sidebar-section {
+  background-color: var(--imdb-hover);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--imdb-border);
+}
+
+.sidebar-title {
+  color: var(--imdb-yellow);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--imdb-border);
+  padding-bottom: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--imdb-border);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: var(--imdb-gray);
   font-weight: 500;
 }
 
-input, textarea {
-  background-color: #222;
-  color: var(--text-light);
-  border: 1px solid #444;
-  border-radius: var(--border-radius);
+.detail-value {
+  color: var(--imdb-light);
+  text-align: right;
+}
+
+/* Trailer Container */
+.trailer-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+
+.trailer-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+/* Authentication Styles */
+.auth-card {
+  background-color: var(--imdb-hover);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: var(--imdb-shadow-hover);
+  border: 1px solid var(--imdb-border);
+}
+
+.auth-header {
+  margin-bottom: 2rem;
+}
+
+.auth-title {
+  color: var(--imdb-yellow);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+  color: var(--imdb-gray);
+  font-size: 1rem;
+}
+
+.auth-form {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--imdb-border);
+}
+
+.divider span {
+  background-color: var(--imdb-hover);
+  padding: 0 1rem;
+  color: var(--imdb-gray);
+  font-size: 0.9rem;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.social-buttons .btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 2rem 0;
+  }
+  
+  .card-img-top {
+    height: 250px;
+  }
+  
+  .display-4 {
+    font-size: 2rem;
+  }
+  
+  .movie-overlay {
+    opacity: 1;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .cast-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .hero-poster {
+    max-width: 200px;
+  }
+  
+  .auth-card {
+    padding: 2rem;
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--imdb-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--imdb-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--imdb-gray);
+}
+
+
+/* === GLOBAL TEXT COLOR FIX === */
+
+/* Forcer le texte sombre en clair */
+.text-dark, .text-body, .text-black, .text-default {
+  color: var(--imdb-light) !important;
+}
+
+/* Forcer les petits textes à être visibles */
+small, .form-text, .text-muted {
+  color: #e0e0e0 !important;
+}
+
+/* Forcer les liens */
+a, .nav-link, .dropdown-item {
+  color: var(--imdb-light) !important;
+}
+
+a:hover, .nav-link:hover {
+  color: var(--imdb-yellow) !important;
+}
+
+/* Forcer le texte dans les boutons */
+.btn, .btn-outline-light, .btn-outline-primary, .btn-outline-secondary {
+  color: var(--imdb-light) !important;
+}
+
+/* Pour les champs de formulaire */
+input, textarea, select, .form-control {
+  background-color: var(--imdb-hover) !important;
+  color: var(--imdb-light) !important;
+  border: 1px solid var(--imdb-border) !important;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--text-muted);
+  color: var(--imdb-gray) !important;
+}
+.dropdown-menu.show {
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 6px;
+  background-color: #1f1f1f;
 }
 
-a {
-  color: var(--accent-color);
-  text-decoration: none;
+.dropdown-item {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: var(--imdb-border);
 }

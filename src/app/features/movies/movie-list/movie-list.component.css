@@ -6,6 +6,28 @@
   transform: scale(1.02);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
+.movie-card .card-body {
+  background-color: var(--imdb-hover);
+  color: var(--imdb-light);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 1rem;
+}
+.movie-card .card-title,
+.movie-card .movie-meta,
+.movie-card .movie-meta small,
+.movie-card .btn,
+.movie-card .bi-heart {
+  color: var(--imdb-light) !important;
+}
+
+.movie-card .badge {
+  background-color: var(--imdb-yellow);
+  color: var(--imdb-dark);
+}
+.movie-card {
+  background-color: var(--imdb-hover) !important;
+}
 
 .genre-filter {
   margin: 16px;
@@ -46,4 +68,205 @@
   border-top-right-radius: 12px;
   object-fit: cover;
   height: 370px;
+}
+
+/* Carousel Styles - TOP OF PAGE */
+.carousel-title-section {
+  background-color: var(--imdb-darker);
+  padding: 2rem 0 1rem 0;
+  border-bottom: 1px solid var(--imdb-border);
+}
+
+.carousel-title {
+  color: var(--imdb-yellow) !important;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+}
+
+.carousel {
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+.carousel-movie {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 600px;
+  position: relative;
+}
+
+.carousel-overlay {
+  background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.4) 100%);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.carousel-content {
+  color: var(--imdb-light) !important;
+  padding: 2rem 0;
+}
+
+.carousel-movie-title {
+  color: var(--imdb-yellow) !important;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+.carousel-movie-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.carousel-rating {
+  color: var(--imdb-yellow) !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.carousel-year, .carousel-genre {
+  color: var(--imdb-gray) !important;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 20px;
+}
+
+.carousel-description {
+  color: var(--imdb-light) !important;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 500px;
+}
+
+.carousel-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.carousel-poster {
+  max-width: 300px;
+  border-radius: 12px;
+  box-shadow: var(--imdb-shadow-hover);
+  transition: transform 0.3s ease;
+}
+
+.carousel-poster:hover {
+  transform: scale(1.05);
+}
+
+/* Carousel Controls */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+}
+
+.carousel-control-prev {
+  left: 20px;
+}
+
+.carousel-control-next {
+  right: 20px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 25px;
+  height: 25px;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+  bottom: 20px;
+}
+
+.carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.5);
+  border: none;
+  margin: 0 5px;
+}
+
+.carousel-indicators button.active {
+  background-color: var(--imdb-yellow);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .carousel-movie-title {
+    font-size: 1.8rem;
+  }
+  
+  .carousel-description {
+    font-size: 1rem;
+  }
+  
+  .carousel-actions {
+    flex-direction: column;
+  }
+  
+  .carousel-poster {
+    max-width: 200px;
+    margin-top: 1rem;
+  }
+  
+  .carousel-movie {
+    min-height: 500px;
+  }
+  
+  .carousel-overlay {
+    padding: 2rem 0;
+  }
+  
+  .carousel-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Search Results Header */
+.search-results-header {
+  background-color: var(--imdb-darker);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--imdb-border);
+  margin-bottom: 2rem;
+}
+
+.search-results-header h2 {
+  color: var(--imdb-yellow) !important;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.search-results-header p {
+  color: var(--imdb-gray) !important;
+  font-size: 1rem;
 }

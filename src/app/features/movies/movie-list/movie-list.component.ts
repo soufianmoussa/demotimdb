@@ -14,6 +14,7 @@ export class MovieListComponent implements OnInit {
   error: string | null = null;
   currentPage = 1;
   totalPages = 0;
+  searchQuery: string = '';
 
   selectedGenre: number | null = null;
   selectedYear: string = '';
@@ -40,10 +41,15 @@ export class MovieListComponent implements OnInit {
     this.years = Array.from({ length: 20 }, (_, i) => `${new Date().getFullYear() - i}`);
 
     this.route.queryParams.subscribe(params => {
+      console.log('Query params received:', params);
       const searchQuery = params['search'];
+      this.searchQuery = searchQuery || '';
+      console.log('Search query:', searchQuery);
       if (searchQuery) {
+        console.log('Calling searchMovies with:', searchQuery);
         this.searchMovies(searchQuery);
       } else {
+        console.log('No search query, calling applyFilters');
         this.applyFilters(); // default popular movies
       }
     });
@@ -87,11 +93,13 @@ export class MovieListComponent implements OnInit {
   }
 
   searchMovies(query: string): void {
+    console.log('searchMovies called with query:', query);
     this.loading = true;
     this.error = null;
 
     this.movieService.searchMovies(query, this.currentPage).subscribe({
       next: (response) => {
+        console.log('Search response received:', response);
         this.movies = response.results.map((movie: any) => ({
           ...movie,
           poster_path: movie.poster_path
@@ -100,6 +108,7 @@ export class MovieListComponent implements OnInit {
         }));
         this.totalPages = response.total_pages;
         this.loading = false;
+        console.log('Search completed, movies count:', this.movies.length);
       },
       error: (err) => {
         console.error('Error searching movies:', err);
@@ -107,6 +116,11 @@ export class MovieListComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.router.navigate(['/movies']);
   }
 
   navigateToDetail(movieId: number): void {

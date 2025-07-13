@@ -107,4 +107,9 @@ constructor(
   this.commentForm.patchValue({ rating: star });
 }
 
+  getGenresString(): string {
+    if (!this.movie?.genres) return '';
+    return this.movie.genres.map((genre: any) => genre.name).join(', ');
+  }
+
 }

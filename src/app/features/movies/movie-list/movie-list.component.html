@@ -1,46 +1,189 @@
-<div class="container">
-  <!-- Hero Section -->
-  <div class="hero-section text-center py-5">
-    <h1 class="display-4">Discover Movies</h1>
-    <p class="lead">Explore the latest and greatest in cinema</p>
+<div class="container-fluid px-0">
+  <!-- Featured Movies Carousel - TOP OF PAGE -->
+  <div class="container-fluid px-0" *ngIf="!loading && !error && movies.length > 0">
+    <div class="carousel-title-section">
+      <div class="container">
+        <h2 class="carousel-title">
+          <i class="bi bi-fire me-2"></i>New & Featured Movies
+        </h2>
+      </div>
+    </div>
+    <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+      <!-- Carousel Indicators -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      </div>
+
+      <!-- Carousel Items -->
+      <div class="carousel-inner">
+        <div class="carousel-item active" *ngFor="let movie of movies.slice(0, 5); let i = index">
+          <div class="carousel-movie" [style.background-image]="'url(https://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'">
+            <div class="carousel-overlay">
+              <div class="container">
+                <div class="row align-items-center">
+                  <div class="col-lg-6">
+                    <div class="carousel-content">
+                      <h3 class="carousel-movie-title">{{ movie.title }}</h3>
+                      <div class="carousel-movie-meta">
+                        <span class="carousel-rating">
+                          <i class="bi bi-star-fill"></i>
+                          {{ movie.vote_average | number:'1.1-1' }}
+                        </span>
+                        <span class="carousel-year">{{ movie.release_date | date:'yyyy' }}</span>
+                        <span class="carousel-genre">{{ movie.genre_ids?.length ? 'Action' : 'Drama' }}</span>
+                      </div>
+                      <p class="carousel-description">{{ movie.overview | slice:0:150 }}{{ movie.overview.length > 150 ? '...' : '' }}</p>
+                      <div class="carousel-actions">
+                        <button class="btn btn-primary btn-lg me-3" (click)="navigateToDetail(movie.id)">
+                          <i class="bi bi-play-circle me-2"></i>Watch Now
+                        </button>
+                        <button class="btn btn-outline-light btn-lg">
+                          <i class="bi bi-heart me-2"></i>Add to Watchlist
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 text-center">
+                    <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+                         [alt]="movie.title"
+                         class="carousel-poster"
+                         onerror="this.src='assets/images/movie-placeholder.jpg'">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
   </div>
 
-  <!-- Movies Grid -->
-  <div class="row g-4" *ngIf="!loading && !error">
-    <div class="col-md-3" *ngFor="let movie of movies">
-      <div class="card h-100" (click)="navigateToDetail(movie.id)">
-        <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
-             [alt]="movie.title"
-             class="card-img-top movie-poster"
-             onerror="this.src='assets/images/movie-placeholder.jpg'">
-        <div class="card-body">
-          <h5 class="card-title text-truncate">{{ movie.title }}</h5>
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="rating">
-              <i class="bi bi-star-fill"></i>
-              {{ movie.vote_average | number:'1.1-1' }}
-            </div>
-            <small class="text-muted">{{ movie.release_date | date:'yyyy' }}</small>
+  <!-- Movies Section -->
+  <div class="container">
+    <!-- Search Results Header -->
+    <div class="row mb-4" *ngIf="!loading && !error && searchQuery">
+      <div class="col-12">
+        <div class="search-results-header">
+          <h2 class="mb-0">
+            <i class="bi bi-search me-2"></i>Search Results for "{{ searchQuery }}"
+          </h2>
+          <p class="text-muted mb-0">{{ movies.length }} movies found</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="row mb-4" *ngIf="!loading && !error && !searchQuery">
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="mb-0">
+            <i class="bi bi-collection-play me-2"></i>Featured Movies
+          </h2>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-light btn-sm">
+              <i class="bi bi-grid me-1"></i>Grid
+            </button>
+            <button class="btn btn-outline-light btn-sm">
+              <i class="bi bi-list me-1"></i>List
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Loading State -->
-  <div class="row" *ngIf="loading">
-    <div class="col-12 text-center py-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <!-- Movies Grid -->
+    <div class="row g-4" *ngIf="!loading && !error">
+      <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6" *ngFor="let movie of movies">
+        <div class="card movie-card h-100" (click)="navigateToDetail(movie.id)">
+          <div class="position-relative">
+            <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+                 [alt]="movie.title"
+                 class="card-img-top movie-poster"
+                 onerror="this.src='assets/images/movie-placeholder.jpg'">
+            <div class="movie-overlay">
+              <button class="btn btn-primary btn-sm">
+                <i class="bi bi-play"></i>
+              </button>
+            </div>
+            <div class="movie-rating">
+              <span class="rating-badge">
+                <i class="bi bi-star-fill"></i>
+                {{ movie.vote_average | number:'1.1-1' }}
+              </span>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-truncate mb-2">{{ movie.title }}</h5>
+            <div class="movie-meta">
+              <small class="text-muted">{{ movie.release_date | date:'yyyy' }}</small>
+              <small class="text-muted ms-2">•</small>
+              <small class="text-muted ms-2">{{ movie.vote_count | number }} votes</small>
+            </div>
+            <div class="mt-auto pt-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="badge bg-secondary">{{ movie.original_language?.toUpperCase() }}</span>
+                <button class="btn btn-outline-light btn-sm">
+                  <i class="bi bi-heart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Error State -->
-  <div class="row" *ngIf="error">
-    <div class="col-12">
-      <div class="alert alert-danger" role="alert">
-        {{ error }}
+    <!-- No Search Results -->
+    <div class="row" *ngIf="!loading && !error && searchQuery && movies.length === 0">
+      <div class="col-12 text-center py-5">
+        <i class="bi bi-search display-1 text-muted mb-3"></i>
+        <h3 class="text-muted">No movies found for "{{ searchQuery }}"</h3>
+        <p class="text-muted">Try searching with different keywords</p>
+        <button class="btn btn-primary" (click)="clearSearch()">
+          <i class="bi bi-arrow-left me-2"></i>Back to Movies
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="row" *ngIf="loading">
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3 text-muted">{{ searchQuery ? 'Searching movies...' : 'Loading amazing movies...' }}</p>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div class="row" *ngIf="error">
+      <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          {{ error }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="row mt-5" *ngIf="!loading && !error && movies.length > 0 && !searchQuery">
+      <div class="col-12 text-center">
+        <button class="btn btn-outline-light btn-lg">
+          <i class="bi bi-arrow-down me-2"></i>Load More Movies
+        </button>
       </div>
     </div>
   </div>

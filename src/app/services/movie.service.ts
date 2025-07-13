@@ -29,6 +29,9 @@ export class MovieService {
       );
   }
 
+
+
+
   getMovieDetails(id: string): Observable<any> {
     const params = new HttpParams()
       .set('append_to_response', 'videos,credits')
@@ -44,11 +47,13 @@ export class MovieService {
   }
 
   searchMovies(query: string, page: number = 1): Observable<any> {
+    console.log('MovieService.searchMovies called with query:', query, 'page:', page);
     const params = new HttpParams()
       .set('query', query)
       .set('page', page.toString())
       .set('language', 'en-US');
 
+    console.log('Making API call to:', `${this.apiUrl}/search/movie`);
     return this.http.get(`${this.apiUrl}/search/movie`, { headers: this.headers, params })
       .pipe(
         catchError(error => {

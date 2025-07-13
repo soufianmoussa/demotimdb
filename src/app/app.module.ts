@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ForumComponent } from './features/forum/forum.component';
 import { LoginComponent } from './auth/login/login.component';
+import { FooterComponent } from './footer/footer.component';
 
 // ✅ ADD THESE
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -19,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
   declarations: [
     AppComponent,
     ForumComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

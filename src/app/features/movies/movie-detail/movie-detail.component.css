@@ -149,3 +149,308 @@
   color: var(--accent-color);
 }
 
+/* Movie Detail Page Specific Text Color Fixes */
+
+/* Overview Section - Enhanced Fixes */
+.content-section {
+  margin-bottom: 3rem;
+  color: var(--imdb-light) !important;
+}
+
+.section-title {
+  color: var(--imdb-yellow) !important;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--imdb-border);
+  padding-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.section-title i {
+  color: var(--imdb-yellow) !important;
+}
+
+.overview-text {
+  color: var(--imdb-light) !important;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  font-weight: 400;
+  text-align: justify;
+  margin-bottom: 0;
+}
+
+/* Ensure all p tags in content sections are visible */
+.content-section p {
+  color: var(--imdb-light) !important;
+}
+
+/* Review Form */
+.review-form {
+  background-color: var(--imdb-hover);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--imdb-border);
+  color: var(--imdb-light) !important;
+}
+
+.review-form h5 {
+  color: var(--imdb-yellow) !important;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.rating-input {
+  margin-bottom: 1rem;
+}
+
+.rating-input .form-label {
+  color: var(--imdb-light) !important;
+  font-weight: 500;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star-rating i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  color: var(--imdb-gray) !important;
+}
+
+.star-rating i.bi-star-fill,
+.star-rating i.text-warning {
+  color: var(--imdb-yellow) !important;
+}
+
+.star-rating i:hover {
+  color: var(--imdb-yellow) !important;
+}
+
+.rating-text {
+  color: var(--imdb-yellow) !important;
+  font-weight: 600;
+}
+
+/* Reviews List */
+.reviews-list {
+  margin-top: 2rem;
+}
+
+.reviews-list .text-muted {
+  color: #e0e0e0 !important;
+}
+
+.reviews-list p {
+  color: var(--imdb-light) !important;
+}
+
+.review-item {
+  background-color: var(--imdb-hover);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--imdb-border);
+  color: var(--imdb-light) !important;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  color: var(--imdb-light) !important;
+}
+
+.reviewer-info strong {
+  color: var(--imdb-yellow) !important;
+}
+
+.review-content p {
+  font-style: italic;
+  color: var(--imdb-light) !important;
+  margin-bottom: 0.5rem;
+}
+
+.review-footer {
+  color: var(--imdb-gray) !important;
+}
+
+.review-footer small {
+  color: #e0e0e0 !important;
+}
+
+/* Cast Section */
+.cast-info h6 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--imdb-light) !important;
+}
+
+.cast-info small {
+  color: var(--imdb-gray) !important;
+  font-size: 0.8rem;
+}
+
+/* Sidebar */
+.sidebar-section {
+  background-color: var(--imdb-hover);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--imdb-border);
+  color: var(--imdb-light) !important;
+}
+
+.sidebar-title {
+  color: var(--imdb-yellow) !important;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--imdb-border);
+  padding-bottom: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--imdb-border);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: var(--imdb-gray) !important;
+  font-weight: 500;
+}
+
+.detail-value {
+  color: var(--imdb-light) !important;
+  text-align: right;
+}
+
+/* Loading and Error States */
+.text-muted {
+  color: #e0e0e0 !important;
+}
+
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+  color: #dc3545 !important;
+  border-left: 4px solid #dc3545;
+  border-radius: 8px;
+}
+
+/* Hero Section Text */
+.hero-content {
+  color: var(--imdb-light) !important;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--imdb-light) !important;
+}
+
+.hero-meta {
+  font-size: 1.1rem;
+  color: var(--imdb-gray) !important;
+  margin-bottom: 1rem;
+}
+
+.hero-meta .separator {
+  margin: 0 0.5rem;
+  color: var(--imdb-gray) !important;
+}
+
+.hero-meta .year,
+.hero-meta .runtime,
+.hero-meta .rating {
+  color: var(--imdb-gray) !important;
+}
+
+.hero-meta .rating {
+  color: var(--imdb-yellow) !important;
+}
+
+/* Form Controls */
+.form-control {
+  background-color: var(--imdb-dark) !important;
+  color: var(--imdb-light) !important;
+  border: 1px solid var(--imdb-border) !important;
+  border-radius: 6px;
+}
+
+.form-control:focus {
+  border-color: var(--imdb-yellow) !important;
+  box-shadow: 0 0 0 0.2rem rgba(245, 197, 24, 0.15) !important;
+  color: var(--imdb-light) !important;
+}
+
+.form-control::placeholder {
+  color: var(--imdb-gray) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--imdb-yellow) !important;
+  border-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: #e6b800 !important;
+  border-color: #e6b800 !important;
+  color: var(--imdb-dark) !important;
+}
+
+.btn-outline-light {
+  color: var(--imdb-yellow) !important;
+  border-color: var(--imdb-yellow) !important;
+  background: transparent !important;
+}
+
+.btn-outline-light:hover {
+  background-color: var(--imdb-yellow) !important;
+  color: var(--imdb-dark) !important;
+  border-color: var(--imdb-yellow) !important;
+}
+
+/* Badges */
+.badge, .bg-secondary {
+  background-color: var(--imdb-gray) !important;
+  color: var(--imdb-light) !important;
+  font-weight: 500;
+  padding: 0.5em 0.75em;
+}
+
+/* Rating Badge */
+.rating-badge {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: var(--imdb-yellow) !important;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.rating-badge i {
+  color: var(--imdb-yellow) !important;
+}
+
